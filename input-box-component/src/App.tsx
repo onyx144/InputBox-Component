@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React, { useState } from 'react';
 import InputBox from './component/InputBox';
 import { Box, Button, Container } from "@mui/material";
 
@@ -7,22 +7,22 @@ function App() {
     {
       type: "string" as const,
       label: "Name",
-      value: "Kaneki",
+      value: "Nikita",
       send: "name",
       onChange: (value: string) => updateField(0, value),
     },
     {
       type: "string" as const,
       label: "Surname",
-      value: "Ken",
+      value: "Nes",
       send: "surname",
       onChange: (value: string) => updateField(1, value),
     },
     {
       type: "number" as const,
-      label: "Phone",
-      value: 380680123456,
-      send: "phone",
+      label: "Age",
+      value: 22,
+      send: "age",
       onChange: (value: number) => updateField(2, value),
     },
     {
@@ -58,16 +58,36 @@ function App() {
       send: "sex",
       onChange: (value: string) => updateField(6, value),
     },
+    {
+      type: "checkbox" as const,
+      label: "Agree to terms",
+      value: false,
+      send: "terms",
+      onChange: (value: boolean) => updateField(7, value),
+    },
+    {
+      type: "radio" as const,
+      label: "Preferred Contact Method",
+      value: "email",
+      options: [
+        { value: "email", label: "Email" },
+        { value: "phone", label: "Phone" },
+      ],
+      send: "contact_method",
+      onChange: (value: string) => updateField(8, value),
+    },
   ]);
-  
-  const updateField = (index: number, value: string | number | Date) => {
+
+  const updateField = (index: number, value: string | number | Date | boolean) => {
     const newFields = [...fields];
     newFields[index].value = value;
     setFields(newFields);
   };
+
   const handleSubmit = () => {
     console.log(fields);
   };
+
   return (
     <Container maxWidth="xs">
       <InputBox fields={fields} />
