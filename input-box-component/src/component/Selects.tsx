@@ -1,5 +1,5 @@
-import React from 'react';
-import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import React, { useState } from 'react';
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, FormHelperText } from '@mui/material';
 
 interface Option {
   value: string;
@@ -11,15 +11,25 @@ interface SelectsProps {
   options: Option[];
   value: string;
   onChange: (value: string) => void;
+  validation?: (value: string) => boolean; 
+  errorText?: string; 
 }
 
-const Selects: React.FC<SelectsProps> = ({ label, options, value, onChange }) => {
+const Selects: React.FC<SelectsProps> = ({ label, options, value, onChange, validation, errorText }) => {
+  const [isError, setIsError] = useState(false); 
   const handleChange = (event: SelectChangeEvent) => {
-    onChange(event.target.value as string);
+    const selectedValue = event.target.value as string;
+
+    // Перевірка на валідність
+    if (validation) {
+      setIsError(!validation(selectedValue));
+    }
+
+    onChange(selectedValue);
   };
 
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth error={isError}>
       <InputLabel>{label}</InputLabel>
       <Select
         value={value}
@@ -32,6 +42,7 @@ const Selects: React.FC<SelectsProps> = ({ label, options, value, onChange }) =>
           </MenuItem>
         ))}
       </Select>
+      {isError && <FormHelperText>{errorText}</FormHelperText>}
     </FormControl>
   );
 };

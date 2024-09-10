@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import TextField from '@mui/material/TextField';
 
 interface InputProps {
@@ -6,17 +6,27 @@ interface InputProps {
   onChange: (value: string | number) => void;
   label: string;
   type: string;
+  validation?: (value: string | number) => boolean; 
+  errorText?: string; 
 }
 
-const Input: FC<InputProps> = ({ value, onChange, label , type}) => {
+const Input: FC<InputProps> = ({ value, onChange, label, type, validation, errorText }) => {
+  const [isError, setIsError] = useState(false); 
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const inputValue = event.target.value;
-      if (typeof value == 'number') {
-        onChange(Number(inputValue));
-      } else {
-        onChange(inputValue);
-      }
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value;
+    let parsedValue: string | number = inputValue;
+
+    if (type === 'number') {
+      parsedValue = Number(inputValue);
+    }
+
+    // Перевірка на валідність
+    if (validation) {
+      setIsError(!validation(parsedValue));
+    }
+
+    onChange(parsedValue);
   };
 
   return (
@@ -28,6 +38,8 @@ const Input: FC<InputProps> = ({ value, onChange, label , type}) => {
       margin="normal"
       value={value}
       onChange={handleChange}
+      error={isError} 
+      helperText={isError ? errorText : ''} 
     />
   );
 };
