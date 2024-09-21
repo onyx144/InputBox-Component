@@ -20,16 +20,21 @@ type BaseField<T> = {
 
 // Типы для разных полей
 type StringField = BaseField<string> & { type: "string" };
-type NumberField = BaseField<number> & { type: "number" };
+type NumberField = BaseField<number> & { 
+  type: "number" 
+  validate_input?: (value: string) => boolean;
+};
 type DateTimeField = BaseField<Date> & { type: "datetime" };
 type YearField = BaseField<Date> & { type: "year" };
 type PlaceField = BaseField<string> & {
   type: "place";
   location: { lat: number; lng: number; city: string }[];
+  validate?: (value: string) => boolean;
 };
 type SelectField = BaseField<string> & {
   type: "select";
   option: { value: string; label: string }[];
+  validate_select?: (value: string) => boolean;
 };
 type CheckboxField = BaseField<boolean> & { type: "checkbox" };
 type RadioButtonField = BaseField<string> & {
@@ -131,6 +136,7 @@ const InputBox: React.FC<InputBoxProps> = ({ fields }) => {
                     const updatedField = { ...field, location: updatedLocation };
                     field.onChange(updatedField.value);
                   }}
+                  validation={field.validate ? field.validate : undefined}
                 />
               </div>
             );
