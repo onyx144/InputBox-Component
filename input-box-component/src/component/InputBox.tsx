@@ -19,10 +19,13 @@ type BaseField<T> = {
 };
 
 // Типы для разных полей
-type StringField = BaseField<string> & { type: "string" };
+type StringField = BaseField<string> & { 
+  type: "string" 
+  validate?: (value: string|number) => boolean;
+};
 type NumberField = BaseField<number> & { 
   type: "number" 
-  validate_input?: (value: string) => boolean;
+  validate?: (value: string|number) => boolean;
 };
 type DateTimeField = BaseField<Date> & { type: "datetime" };
 type YearField = BaseField<Date> & { type: "year" };
@@ -34,7 +37,7 @@ type PlaceField = BaseField<string> & {
 type SelectField = BaseField<string> & {
   type: "select";
   option: { value: string; label: string }[];
-  validate_select?: (value: string) => boolean;
+  validate?: (value: string) => boolean;
 };
 type CheckboxField = BaseField<boolean> & { type: "checkbox" };
 type RadioButtonField = BaseField<string> & {
@@ -73,6 +76,7 @@ const InputBox: React.FC<InputBoxProps> = ({ fields }) => {
                   type="text"
                   value={field.value as string}
                   onChange={(value) => field.onChange(value as string)}
+                  validation={field.validate ? field.validate : undefined}
                 />
               </div>
             );
@@ -84,6 +88,7 @@ const InputBox: React.FC<InputBoxProps> = ({ fields }) => {
                   options={field.option}
                   value={field.value}
                   onChange={(value) => field.onChange(value as string)}
+                  validation={field.validate ? field.validate : undefined}
                 />
               </div>
             );
@@ -95,6 +100,7 @@ const InputBox: React.FC<InputBoxProps> = ({ fields }) => {
                   type="number"
                   value={field.value as number}
                   onChange={(value) => field.onChange(value as number)}
+                  validation={field.validate ? field.validate : undefined}
                 />
               </div>
             );
