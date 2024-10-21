@@ -1,0 +1,163 @@
+
+$body-color: #e4e9f7;
+$sidebar-color: #fff;
+$primary-color: #695cfe;
+$primary-color-light: #f6f5ff;
+$toggle-color: #ddd;
+$text-color: #707070;
+// Темна тема
+
+
+
+.sidebar {
+    background-color: $sidebar-color;
+    padding: 10px 14px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    transition: all 0.5s ease;
+  
+    &.close {
+      width: 88px;
+    }
+  
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  
+      .image-text {
+        display: flex;
+        align-items: center;
+        
+        .image img {
+          width: 40px;
+          border-radius: 6px;
+        }
+        
+        .logo-text {
+          display: flex;
+          flex-direction: column;
+          
+          .name {
+            font-size: 18px;
+            font-weight: 600;
+          }
+  
+          .profession {
+            font-size: 16px;
+            margin-top: -2px;
+          }
+        }
+      }
+     
+      .toggleButton {
+        background-color: $primary-color;
+        border-radius: 50%;
+        font-size: 22px;
+        cursor: pointer;
+        transition: all 0.5s ease;
+        transform: rotate(180deg);
+  
+        &:hover {
+          background-color: $primary-color-light;
+        }
+      }
+  
+      &.close .toggle {
+        transform: rotate(0deg);
+      }
+    }
+  
+    .menu_bar {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: calc(100% - 55px);
+      overflow-y: auto;
+  
+      .menu_links {
+        list-style: none;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        height: 50px;
+        cursor: pointer;
+        justify-content: center;
+        
+        &:hover {
+          background: $primary-color;
+          color: #fff;
+          .icon_test {
+            color: #fff;
+          }  
+        }
+        .icon_test {
+          min-width: 60px;
+          display: flex;
+          justify-content: center;
+          font-size: 20px;
+
+        }
+      }
+    }
+  
+    .bottom-content {
+      li {
+        .mode {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 10px;
+          background-color: $primary-color-light;
+          border-radius: 6px;
+  
+          .toggle-switch {
+            background-color: $toggle-color;
+            border-radius: 25px;
+            height: 22px;
+            width: 40px;
+            position: relative;
+            cursor: pointer;
+  
+            .switch {
+              position: absolute;
+              top: 50%;
+              left: 5px;
+              height: 15px;
+              width: 15px;
+              background-color: $sidebar-color;
+              border-radius: 50%;
+              transition: all 0.4s ease;
+            }
+  
+            body.dark & .switch {
+              left: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Темна тема
+ 
+  
+  // Стилі для кнопок
+  button {
+    background-color: $primary-color;
+    color: $sidebar-color;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: $primary-color-light;
+    }
+  
+  }
